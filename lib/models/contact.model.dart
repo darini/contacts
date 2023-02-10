@@ -1,22 +1,22 @@
 class ContactModel {
   int id = 0;
-  String name = '';
+  String? name = '';
   String? email = '';
-  String phone = '';
+  String? phone = '';
   String? image = 'assets/images/profile-picture.png';
-  String addressLine1 = '';
-  String addressLine2 = '';
-  String latLng = '';
+  String? addressLine1 = '';
+  String? addressLine2 = '';
+  String? latLng = '';
 
   ContactModel({
     required this.id,
-    required this.name,
+    this.name,
     this.email,
-    required this.phone,
+    this.phone,
     this.image,
-    required this.addressLine1,
-    required this.addressLine2,
-    required this.latLng,
+    this.addressLine1,
+    this.addressLine2,
+    this.latLng,
   });
 
   Map<String, dynamic> toMap() {
