@@ -1,43 +1,136 @@
+import 'package:contacts/android/views/home.view.dart';
 import 'package:contacts/models/contact.model.dart';
+import 'package:contacts/repositories/contact.repository.dart';
 import 'package:flutter/material.dart';
 
-class EditorContactView extends StatelessWidget {
-  final ContactModel? model;
+class EditorContactView extends StatefulWidget {
+  final ContactModel contactModel;
 
-  const EditorContactView({Key? key, required this.model}) : super(key: key);
+  const EditorContactView({Key? key, required this.contactModel})
+      : super(key: key);
+
+  @override
+  State<EditorContactView> createState() => _EditorContactViewState();
+}
+
+class _EditorContactViewState extends State<EditorContactView> {
+  final _formKey = GlobalKey<FormState>();
+  final _repository = ContactRepository();
+
+  onSubmit() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    _formKey.currentState!.save();
+
+    if (widget.contactModel.id == 0) {
+      create();
+    } else {
+      update();
+    }
+  }
+
+  create() {
+    _repository
+        .create(widget.contactModel)
+        .then(
+          (_) => {
+            onSuccess(),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            onError(),
+          },
+        );
+  }
+
+  update() {}
+
+  onSuccess() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomeView(),
+      ),
+    );
+  }
+
+  onError() {
+    SnackBar snackBar = const SnackBar(
+      content: Text('Ops, algo deu errado'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: model == null
+        title: widget.contactModel.id == 0
             ? const Text("Novo Contato")
             : const Text("Editar Contato"),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               TextFormField(
-                initialValue: model?.name,
-                onSaved: (val) {
-                  model!.name = val!;
+                initialValue: widget.contactModel.name,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  labelText: 'Nome',
+                ),
+                onChanged: (val) {
+                  widget.contactModel.name = val;
+                },
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return 'Nome inválido';
+                  }
+
+                  return null;
                 },
               ),
               TextFormField(
-                initialValue: model?.phone,
-                onSaved: (val) {
-                  model!.phone = val!;
+                initialValue: widget.contactModel.phone,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  labelText: 'Telefone',
+                ),
+                onChanged: (val) {
+                  widget.contactModel.phone = val;
+                },
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return 'Telefone inválido';
+                  }
+
+                  return null;
                 },
               ),
               TextFormField(
-                initialValue: model?.email,
-                onSaved: (val) {
-                  model!.email = val!;
+                initialValue: widget.contactModel.email,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: 'E-mail',
+                ),
+                onChanged: (val) {
+                  widget.contactModel.email = val;
+                },
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return 'E-mail inválido';
+                  }
+
+                  return null;
                 },
               ),
               const SizedBox(
@@ -51,7 +144,9 @@ class EditorContactView extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all(
                         Theme.of(context).primaryColor),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    onSubmit();
+                  },
                   icon: const Icon(
                     Icons.save,
                     color: Colors.white,

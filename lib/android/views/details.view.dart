@@ -166,7 +166,7 @@ class DetailsView extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => EditorContactView(
-                model: ContactModel(
+                contactModel: ContactModel(
                     id: 1,
                     name: "Lucas Darini",
                     email: "lucas.rocha15@fatec.sp.gov.br",
