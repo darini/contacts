@@ -3,7 +3,7 @@ class ContactModel {
   String? name = '';
   String? email = '';
   String? phone = '';
-  String? image = 'assets/images/profile-picture.png';
+  String? image;
   String? addressLine1 = '';
   String? addressLine2 = '';
   String? latLng = '';
@@ -34,9 +34,10 @@ class ContactModel {
 
   factory ContactModel.fromMap(Map<String, dynamic> map) {
     return ContactModel(
-        id: int.parse(map['id']),
+        id: map['id'],
         name: map['name'],
         phone: map['phone'],
+        email: map['email'],
         addressLine1: map['addressLine1'],
         addressLine2: map['addressLine2'],
         latLng: map['latLng']);

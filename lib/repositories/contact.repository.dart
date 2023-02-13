@@ -23,7 +23,7 @@ class ContactRepository {
 
       await db.insert(
         TABLE_NAME,
-        contactModel.toMap(),
+        contactModel.toMap()..removeWhere((key, value) => key == 'id'),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (e) {

@@ -46,7 +46,20 @@ class _EditorContactViewState extends State<EditorContactView> {
         );
   }
 
-  update() {}
+  update() {
+    _repository
+        .update(widget.contactModel)
+        .then(
+          (_) => {
+            onSuccess(),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            onError(),
+          },
+        );
+  }
 
   onSuccess() {
     Navigator.push(
@@ -85,6 +98,7 @@ class _EditorContactViewState extends State<EditorContactView> {
               TextFormField(
                 initialValue: widget.contactModel.name,
                 keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
