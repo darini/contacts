@@ -1,5 +1,6 @@
 import 'package:contacts/android/views/address.view.dart';
 import 'package:contacts/android/views/editor-contact.view.dart';
+import 'package:contacts/android/views/home.view.dart';
 import 'package:contacts/android/views/loading.view.dart';
 import 'package:contacts/shared/widgets/contact-details-description.widget.dart';
 import 'package:contacts/models/contact.model.dart';
@@ -18,6 +19,56 @@ class DetailsView extends StatefulWidget {
 
 class _DetailsViewState extends State<DetailsView> {
   final _repository = ContactRepository();
+
+  onDelete() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Exclusão de Contato'),
+            content: const Text('Deseja excluir esse contato?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  delete();
+                },
+                child: const Text('Excluir'),
+              ),
+            ],
+          );
+        });
+  }
+
+  delete() {
+    _repository.delete(ContactModel(id: widget.id)).then((_) {
+      onSuccess();
+    }).catchError((onError) {
+      onError();
+    });
+  }
+
+  onSuccess() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomeView(),
+      ),
+    );
+  }
+
+  onError() {
+    SnackBar snackBar = const SnackBar(
+      content: Text('Ops, algo deu errado'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +216,25 @@ class _DetailsViewState extends State<DetailsView> {
               child: Icon(
                 Icons.pin_drop,
                 color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+            ),
+            child: Container(
+              width: double.infinity,
+              color: Colors.red,
+              height: 50,
+              child: TextButton(
+                onPressed: onDelete,
+                child: Text(
+                  'Excluir Contato',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
               ),
             ),
           ),
