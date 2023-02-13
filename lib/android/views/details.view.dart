@@ -6,6 +6,7 @@ import 'package:contacts/models/contact.model.dart';
 import 'package:contacts/repositories/contact.repository.dart';
 import 'package:contacts/shared/widgets/contact-details-image.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsView extends StatefulWidget {
   final int id;
@@ -63,7 +64,15 @@ class _DetailsViewState extends State<DetailsView> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  final Uri _uri = Uri.parse(
+                    'tel:${contactModel.phone}'
+                        .replaceAll('(', '')
+                        .replaceAll(')', '')
+                        .replaceAll('-', ''),
+                  );
+                  launchUrl(_uri);
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll(Theme.of(context).primaryColor),
@@ -79,7 +88,10 @@ class _DetailsViewState extends State<DetailsView> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  final Uri _uri = Uri.parse('mailto:${contactModel.email}');
+                  launchUrl(_uri);
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll(Theme.of(context).primaryColor),
