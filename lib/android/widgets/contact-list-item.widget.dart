@@ -33,7 +33,9 @@ class ContactListItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const DetailsView(),
+              builder: (context) => DetailsView(
+                id: contactModel.id,
+              ),
             ),
           );
         },

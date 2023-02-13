@@ -1,13 +1,37 @@
 import 'package:contacts/android/views/address.view.dart';
 import 'package:contacts/android/views/editor-contact.view.dart';
+import 'package:contacts/android/views/loading.view.dart';
+import 'package:contacts/shared/widgets/contact-details-description.widget.dart';
 import 'package:contacts/models/contact.model.dart';
+import 'package:contacts/repositories/contact.repository.dart';
+import 'package:contacts/shared/widgets/contact-details-image.widget.dart';
 import 'package:flutter/material.dart';
 
-class DetailsView extends StatelessWidget {
-  const DetailsView({Key? key}) : super(key: key);
+class DetailsView extends StatefulWidget {
+  final int id;
+  const DetailsView({Key? key, required this.id}) : super(key: key);
+
+  @override
+  State<DetailsView> createState() => _DetailsViewState();
+}
+
+class _DetailsViewState extends State<DetailsView> {
+  final _repository = ContactRepository();
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _repository.getContact(widget.id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return page(context, snapshot.data!);
+          } else {
+            return const LoadingView();
+          }
+        });
+  }
+
+  Widget page(BuildContext context, ContactModel contactModel) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Contato"),
@@ -21,48 +45,16 @@ class DetailsView extends StatelessWidget {
             height: 10,
             width: double.infinity,
           ),
-          Container(
-            width: 200,
-            height: 200,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(200),
-            ),
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                image: const DecorationImage(
-                  image: NetworkImage("https://place-hold.it/200"),
-                ),
-              ),
-            ),
+          ContactDetailsImage(
+            image: contactModel.image,
           ),
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            "Lucas Darini",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const Text(
-            "00 99999-9999",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const Text(
-            "lucas.rocha15@fatec.sp.gov.br",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            ),
+          ContactDetailsDescription(
+            name: contactModel.name!,
+            phone: contactModel.phone!,
+            email: contactModel.email!,
           ),
           const SizedBox(
             height: 20,
@@ -73,6 +65,8 @@ class DetailsView extends StatelessWidget {
               TextButton(
                 onPressed: () {},
                 style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Theme.of(context).primaryColor),
                   shape: MaterialStateProperty.all(
                     const CircleBorder(
                       side: BorderSide.none,
@@ -87,6 +81,8 @@ class DetailsView extends StatelessWidget {
               TextButton(
                 onPressed: () {},
                 style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Theme.of(context).primaryColor),
                   shape: MaterialStateProperty.all(
                     const CircleBorder(
                       side: BorderSide.none,
@@ -101,6 +97,8 @@ class DetailsView extends StatelessWidget {
               TextButton(
                 onPressed: () {},
                 style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStatePropertyAll(Theme.of(context).primaryColor),
                   shape: MaterialStateProperty.all(
                     const CircleBorder(
                       side: BorderSide.none,
@@ -127,16 +125,16 @@ class DetailsView extends StatelessWidget {
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
-                  "Rua do Desenvolvedor, 256",
-                  style: TextStyle(
+                  contactModel.addressLine1 ?? 'Nenhum endereço cadastrado',
+                  style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
                 Text(
-                  "Piracicaba/SP",
-                  style: TextStyle(
+                  contactModel.addressLine2 ?? '',
+                  style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
@@ -167,13 +165,13 @@ class DetailsView extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => EditorContactView(
                 contactModel: ContactModel(
-                    id: 1,
-                    name: "Lucas Darini",
-                    email: "lucas.rocha15@fatec.sp.gov.br",
-                    phone: "00 99999-9999",
-                    addressLine1: 'Rua Desenvolvedor',
-                    addressLine2: 'Nº 0',
-                    latLng: ''),
+                    id: contactModel.id,
+                    name: contactModel.name,
+                    email: contactModel.email,
+                    phone: contactModel.phone,
+                    addressLine1: contactModel.addressLine1 ?? '',
+                    addressLine2: contactModel.addressLine2 ?? '',
+                    latLng: contactModel.latLng),
               ),
             ),
           );

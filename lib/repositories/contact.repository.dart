@@ -83,7 +83,9 @@ class ContactRepository {
           id,
         ],
       );
-
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
       return ContactModel.fromMap(mapContact[0]);
     } catch (e) {
       print(e);
