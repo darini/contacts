@@ -17,6 +17,7 @@ class ContactListItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(48),
           image: DecorationImage(
+            fit: BoxFit.cover,
             image: contactModel.image == null
                 ? Image.asset('assets/images/profile-picture.png').image
                 : FileImage(
