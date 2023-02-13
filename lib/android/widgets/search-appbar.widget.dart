@@ -15,15 +15,15 @@ class SearchAppBar extends StatelessWidget {
         builder: (_) => controller.showSearch
             ? TextField(
                 autofocus: true,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
-                cursorColor: Colors.white,
-                decoration: const InputDecoration(
+                cursorColor: Theme.of(context).colorScheme.secondary,
+                decoration: InputDecoration(
                     border: InputBorder.none,
                     labelText: 'Pesquisar...',
                     labelStyle: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.secondary,
                     )),
                 onSubmitted: (val) {
                   controller.search(val);
@@ -36,7 +36,7 @@ class SearchAppBar extends StatelessWidget {
         child: Observer(
           builder: (_) => Icon(
             controller.showSearch ? Icons.close : Icons.search,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.secondary,
           ),
         ),
         onPressed: () {

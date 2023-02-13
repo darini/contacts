@@ -55,9 +55,9 @@ class _HomeViewState extends State<HomeView> {
           );
         },
         backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(
+        child: Icon(
           Icons.add,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
         ),
       ),
     );

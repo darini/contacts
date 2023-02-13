@@ -12,7 +12,7 @@ class DetailsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Contato"),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
       ),
       body: Column(
@@ -179,9 +179,9 @@ class DetailsView extends StatelessWidget {
           );
         },
         backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(
+        child: Icon(
           Icons.edit,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.secondary,
         ),
       ),
     );

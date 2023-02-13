@@ -161,14 +161,14 @@ class _EditorContactViewState extends State<EditorContactView> {
                   onPressed: () {
                     onSubmit();
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.save,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  label: const Text(
+                  label: Text(
                     "Salvar",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.secondary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
