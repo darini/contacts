@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:contacts/ios/styles.dart';
+import 'package:contacts/ios/views/details.view.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:flutter/cupertino.dart';
 
