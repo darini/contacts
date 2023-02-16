@@ -4,8 +4,8 @@ class ContactModel {
   String? email = '';
   String? phone = '';
   String? image;
-  String? addressLine1 = '';
-  String? addressLine2 = '';
+  String? addressLine1;
+  String? addressLine2;
   String? latLng = '';
 
   ContactModel({
