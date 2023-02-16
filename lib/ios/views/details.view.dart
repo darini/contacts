@@ -4,9 +4,15 @@ import 'package:contacts/ios/views/editor-contact.view.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:flutter/cupertino.dart';
 
-class DetailsView extends StatelessWidget {
-  const DetailsView({Key? key}) : super(key: key);
+class DetailsView extends StatefulWidget {
+  final int id;
+  const DetailsView({Key? key, required this.id}) : super(key: key);
 
+  @override
+  State<DetailsView> createState() => _DetailsViewState();
+}
+
+class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -25,7 +31,7 @@ class DetailsView extends StatelessWidget {
                   context,
                   CupertinoPageRoute(
                     builder: (context) => EditorContactView(
-                      model: ContactModel(
+                      contactModel: ContactModel(
                         id: 1,
                         name: "Lucas Darini",
                         email: "lucas.rocha15@fatec.sp.gov.br",
