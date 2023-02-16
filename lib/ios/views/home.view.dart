@@ -1,6 +1,7 @@
 import 'package:contacts/ios/views/editor-contact.view.dart';
 import 'package:contacts/ios/styles.dart';
 import 'package:contacts/ios/views/details.view.dart';
+import 'package:contacts/models/contact.model.dart';
 import 'package:flutter/cupertino.dart';
 
 class HomeView extends StatelessWidget {
@@ -23,7 +24,9 @@ class HomeView extends StatelessWidget {
                 Navigator.push(
                   context,
                   CupertinoPageRoute(
-                    builder: (context) => const EditorContactView(model: null),
+                    builder: (context) => EditorContactView(
+                      contactModel: ContactModel(id: 0),
+                    ),
                   ),
                 );
               },
@@ -90,7 +93,9 @@ class HomeView extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (context) => const DetailsView(),
+                                    builder: (context) => const DetailsView(
+                                      id: 0,
+                                    ),
                                   ),
                                 );
                               },
