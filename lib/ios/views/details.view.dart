@@ -1,5 +1,6 @@
 import 'package:contacts/ios/views/address.view.dart';
 import 'package:contacts/ios/views/editor-contact.view.dart';
+import 'package:contacts/ios/views/home.view.dart';
 import 'package:contacts/ios/views/loading.view.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:contacts/repositories/contact.repository.dart';
@@ -18,6 +19,71 @@ class DetailsView extends StatefulWidget {
 
 class _DetailsViewState extends State<DetailsView> {
   final _repository = ContactRepository();
+
+  onDelete() {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text(
+              'Exclusão de Contato',
+            ),
+            content: const Text(
+              'Deseja excluir esse contato?',
+            ),
+            actions: <Widget>[
+              CupertinoButton(
+                child: const Text(
+                  'Cancelar',
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoButton(
+                onPressed: delete,
+                child: const Text(
+                  'Excluir',
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  delete() {
+    _repository.delete(ContactModel(id: widget.id)).then((_) {
+      onSuccess();
+    }).catchError((onError) {});
+  }
+
+  onSuccess() {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => const HomeView(),
+      ),
+    );
+  }
+
+  onError() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: const Text('Falha na operação'),
+          content: const Text('Ops, algo deu erro'),
+          actions: [
+            CupertinoButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,10 +224,10 @@ class _DetailsViewState extends State<DetailsView> {
                         height: 20,
                       ),
                       CupertinoButton.filled(
+                        onPressed: onDelete,
                         child: const Text(
                           'Excluir Contato',
                         ),
-                        onPressed: () {},
                       ),
                     ],
                   ),
