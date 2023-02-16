@@ -18,12 +18,6 @@ class _EditorContactViewState extends State<EditorContactView> {
   final _repository = ContactRepository();
 
   onSubmit() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-
-    _formKey.currentState!.save();
-
     if (widget.contactModel.id == 0) {
       create();
     } else {
@@ -143,7 +137,9 @@ class _EditorContactViewState extends State<EditorContactView> {
                       width: double.infinity,
                       height: 50,
                       child: CupertinoButton.filled(
-                        onPressed: () {},
+                        onPressed: () {
+                          onSubmit();
+                        },
                         child: const Text(
                           "Salvar",
                         ),
