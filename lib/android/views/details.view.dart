@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:contacts/android/views/address.view.dart';
+import 'package:contacts/android/views/crop-picture.view.dart';
 import 'package:contacts/android/views/editor-contact.view.dart';
 import 'package:contacts/android/views/home.view.dart';
 import 'package:contacts/android/views/loading.view.dart';
@@ -85,11 +86,26 @@ class _DetailsViewState extends State<DetailsView> {
         ),
       ).then(
         (imagePath) {
-          // cropPicture(imagePath);
+          cropPicture(imagePath);
         },
       );
     }
   }
+
+  cropPicture(String path) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CropPictureView(
+          path: path,
+        ),
+      ),
+    ).then((imagePath) {
+      updateImage(imagePath);
+    });
+  }
+
+  updateImage(String imagePath) async {}
 
   @override
   Widget build(BuildContext context) {
