@@ -105,7 +105,18 @@ class _DetailsViewState extends State<DetailsView> {
     });
   }
 
-  updateImage(String imagePath) async {}
+  updateImage(String imagePath) async {
+    _repository
+        .update(
+      ContactModel(
+        id: widget.id,
+        image: imagePath,
+      ),
+    )
+        .then((_) {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
