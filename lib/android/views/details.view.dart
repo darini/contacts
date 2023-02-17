@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailsView extends StatefulWidget {
-  final int id;
-  const DetailsView({Key? key, required this.id}) : super(key: key);
+  final ContactModel contactModel;
+  const DetailsView({Key? key, required this.contactModel}) : super(key: key);
 
   @override
   State<DetailsView> createState() => _DetailsViewState();
@@ -49,7 +49,7 @@ class _DetailsViewState extends State<DetailsView> {
   }
 
   delete() {
-    _repository.delete(ContactModel(id: widget.id)).then((_) {
+    _repository.delete(ContactModel(id: widget.contactModel.id)).then((_) {
       onSuccess();
     }).catchError((onError) {
       onError();
@@ -106,14 +106,10 @@ class _DetailsViewState extends State<DetailsView> {
   }
 
   updateImage(String imagePath) async {
-    _repository
-        .update(
-      ContactModel(
-        id: widget.id,
-        image: imagePath,
-      ),
-    )
-        .then((_) {
+    ContactModel _contact = widget.contactModel;
+
+    _contact.image = imagePath;
+    _repository.update(_contact).then((_) {
       setState(() {});
     });
   }
@@ -121,7 +117,7 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _repository.getContact(widget.id),
+        future: _repository.getContact(widget.contactModel.id),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return page(context, snapshot.data!);

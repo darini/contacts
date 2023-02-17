@@ -10,8 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailsView extends StatefulWidget {
-  final int id;
-  const DetailsView({Key? key, required this.id}) : super(key: key);
+  final ContactModel conctactModel;
+  const DetailsView({Key? key, required this.conctactModel}) : super(key: key);
 
   @override
   State<DetailsView> createState() => _DetailsViewState();
@@ -52,7 +52,7 @@ class _DetailsViewState extends State<DetailsView> {
   }
 
   delete() {
-    _repository.delete(ContactModel(id: widget.id)).then((_) {
+    _repository.delete(ContactModel(id: widget.conctactModel.id)).then((_) {
       onSuccess();
     }).catchError((onError) {});
   }
@@ -88,7 +88,7 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _repository.getContact(widget.id),
+      future: _repository.getContact(widget.conctactModel.id),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           ContactModel contactModel = snapshot.data!;

@@ -62,7 +62,7 @@ class ContactListItem extends StatelessWidget {
               context,
               CupertinoPageRoute(
                 builder: (context) => DetailsView(
-                  id: contactModel.id,
+                  conctactModel: contactModel,
                 ),
               ),
             );

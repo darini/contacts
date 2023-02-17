@@ -34,7 +34,7 @@ class ContactListItem extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => DetailsView(
-                id: contactModel.id,
+                contactModel: contactModel,
               ),
             ),
           );
