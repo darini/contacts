@@ -40,6 +40,7 @@ class ContactModel {
         email: map['email'],
         addressLine1: map['addressLine1'],
         addressLine2: map['addressLine2'],
+        image: map['image'],
         latLng: map['latLng']);
   }
 }
