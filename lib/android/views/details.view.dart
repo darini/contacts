@@ -1,7 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:contacts/android/views/address.view.dart';
 import 'package:contacts/android/views/editor-contact.view.dart';
 import 'package:contacts/android/views/home.view.dart';
 import 'package:contacts/android/views/loading.view.dart';
+import 'package:contacts/android/views/take-picture.view.dart';
 import 'package:contacts/shared/widgets/contact-details-description.widget.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:contacts/repositories/contact.repository.dart';
@@ -68,6 +70,25 @@ class _DetailsViewState extends State<DetailsView> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  takePicture() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    if (context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TakePictureView(
+            camera: firstCamera,
+          ),
+        ),
+      ).then(
+        (imagePath) {
+          // cropPicture(imagePath);
+        },
+      );
+    }
   }
 
   @override
@@ -158,7 +179,9 @@ class _DetailsViewState extends State<DetailsView> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  takePicture();
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStatePropertyAll(Theme.of(context).primaryColor),
