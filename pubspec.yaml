@@ -38,6 +38,7 @@ dependencies:
   flutter_mobx: ^2.0.6+5
   camera:
   path_provider:
+  image_crop: ^0.4.1
 
 
   # The following adds the Cupertino Icons font to your application.
