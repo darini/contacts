@@ -32,8 +32,14 @@ class _TakePictureViewState extends State<TakePictureView> {
   }
 
   Future<String> takePhoto() async {
-    try {} catch (ex) {}
-    return "";
+    try {
+      await _initializeControllerFuture;
+
+      XFile? imageFile = await _controller.takePicture();
+      return imageFile.path;
+    } catch (ex) {
+      return "";
+    }
   }
 
   @override
