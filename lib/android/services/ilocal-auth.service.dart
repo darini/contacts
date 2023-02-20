@@ -3,4 +3,5 @@ abstract class ILocalAuthService {
   Future availableBiometrics();
   Future<bool> authenticateWithBiometrics();
   Future<bool> authenticate();
+  Future<bool> stopAuthenticate();
 }

@@ -30,4 +30,9 @@ class LocalAuthenticationService extends ILocalAuthService {
   Future availableBiometrics() async {
     await _localAuthentication.getAvailableBiometrics();
   }
+
+  @override
+  Future<bool> stopAuthenticate() async {
+    return await _localAuthentication.stopAuthentication();
+  }
 }
