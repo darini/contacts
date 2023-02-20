@@ -15,21 +15,28 @@ class _SplashViewState extends State<SplashView> {
   @override
   initState() {
     super.initState();
+
     Future.delayed(
       const Duration(
         seconds: 2,
       ),
     ).then((_) {
-      widget.localAuthenticationService.authenticate().then((result) {
-        if (result) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const HomeView(),
-            ),
+      widget.localAuthenticationService.stopAuthenticate().then(
+            (_) => auth(),
           );
-        }
-      }).catchError((onError) {});
     });
+  }
+
+  auth() {
+    widget.localAuthenticationService.authenticate().then((result) {
+      if (result) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const HomeView(),
+          ),
+        );
+      }
+    }).catchError((onError) {});
   }
 
   @override
