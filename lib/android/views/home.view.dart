@@ -3,7 +3,6 @@ import 'package:contacts/android/widgets/contact-list-item.widget.dart';
 import 'package:contacts/android/widgets/search-appbar.widget.dart';
 import 'package:contacts/controllers/home.controller.dart';
 import 'package:contacts/models/contact.model.dart';
-import 'package:contacts/shared/views/security.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -27,10 +26,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return SecurityView(widget: home());
-  }
-
-  Widget home() {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),

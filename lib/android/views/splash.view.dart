@@ -1,11 +1,16 @@
 import 'package:contacts/android/services/ilocal-auth.service.dart';
 import 'package:contacts/android/views/home.view.dart';
+import 'package:contacts/controllers/auth.controller.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
   final ILocalAuthService localAuthenticationService;
-  const SplashView({Key? key, required this.localAuthenticationService})
-      : super(key: key);
+  final AuthController authController;
+  const SplashView({
+    Key? key,
+    required this.localAuthenticationService,
+    required this.authController,
+  }) : super(key: key);
 
   @override
   State<SplashView> createState() => _SplashViewState();
@@ -30,11 +35,7 @@ class _SplashViewState extends State<SplashView> {
   auth() {
     widget.localAuthenticationService.authenticate().then((result) {
       if (result) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => const HomeView(),
-          ),
-        );
+        widget.authController.setAuthenticated();
       }
     }).catchError((onError) {});
   }
