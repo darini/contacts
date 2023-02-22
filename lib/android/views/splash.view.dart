@@ -1,5 +1,4 @@
-import 'package:contacts/android/services/ilocal-auth.service.dart';
-import 'package:contacts/android/views/home.view.dart';
+import 'package:contacts/services/ilocal-auth.service.dart';
 import 'package:contacts/controllers/auth.controller.dart';
 import 'package:flutter/material.dart';
 
