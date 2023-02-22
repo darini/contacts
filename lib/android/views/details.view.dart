@@ -255,7 +255,9 @@ class _DetailsViewState extends State<DetailsView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AddressView(),
+                    builder: (context) => AddressView(
+                      contactModel: contactModel,
+                    ),
                   ),
                 );
               },
