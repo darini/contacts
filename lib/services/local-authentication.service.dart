@@ -1,4 +1,4 @@
-import 'package:contacts/android/services/ilocal-auth.service.dart';
+import 'package:contacts/services/ilocal-auth.service.dart';
 import 'package:local_auth/local_auth.dart';
 
 class LocalAuthenticationService extends ILocalAuthService {
