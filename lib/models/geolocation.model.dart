@@ -1,10 +1,10 @@
-class AddressModel {
+class GeolocationModel {
   String longName;
   String formattedAddress;
   double latitude;
   double longitude;
 
-  AddressModel({
+  GeolocationModel({
     required this.longName,
     required this.formattedAddress,
     required this.latitude,
