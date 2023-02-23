@@ -237,6 +237,7 @@ class _AddressViewState extends State<AddressView> {
           Icons.my_location,
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
