@@ -4,7 +4,7 @@ import 'package:contacts/services/ihttp.service.dart';
 import 'package:contacts/settings.dart';
 import 'package:dio/dio.dart';
 
-class AddressRepository {
+class GeolocationRepository {
   final String url = 'https://maps.googleapis.com/maps/api/geocode/json?'
       'key=$MAPS_API_KEY&address=';
 
