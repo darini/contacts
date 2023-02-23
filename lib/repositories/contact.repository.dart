@@ -127,26 +127,4 @@ class ContactRepository {
       return;
     }
   }
-
-  Future updateImage(int id, String imagePath) async {
-    try {
-      final Database db = await _getDataBase();
-
-      final ContactModel? contactModel = await getContact(id);
-
-      if (contactModel != null) {
-        await db.update(
-          TABLE_NAME,
-          contactModel.toMap(),
-          where: 'id = ?',
-          whereArgs: [
-            contactModel.id,
-          ],
-        );
-      }
-    } catch (e) {
-      print(e);
-      return;
-    }
-  }
 }
