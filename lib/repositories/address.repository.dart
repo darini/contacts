@@ -1,4 +1,4 @@
-import 'package:contacts/models/address.model.dart';
+import 'package:contacts/models/geolocation.model.dart';
 import 'package:contacts/services/dio-http.service.dart';
 import 'package:contacts/services/ihttp.service.dart';
 import 'package:contacts/settings.dart';
@@ -10,10 +10,10 @@ class AddressRepository {
 
   final IHttpService httpService = DioHttp();
 
-  Future<AddressModel> searchAddress(String address) async {
+  Future<GeolocationModel> searchAddress(String address) async {
     Response response = await httpService.get(url + address, null);
 
-    return AddressModel(
+    return GeolocationModel(
       longName: response.data['results'][0]['address_components'][0]
           ['long_name'],
       formattedAddress: response.data['results'][0]['formatted_address'],
