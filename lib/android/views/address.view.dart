@@ -1,5 +1,6 @@
 import 'package:contacts/models/contact.model.dart';
-import 'package:contacts/repositories/address.repository.dart';
+import 'package:contacts/repositories/geolocation.repository.dart';
+import 'package:contacts/repositories/contact.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,7 +15,8 @@ class AddressView extends StatefulWidget {
 }
 
 class _AddressViewState extends State<AddressView> {
-  final AddressRepository _addressRepository = AddressRepository();
+  final GeolocationRepository _addressRepository = GeolocationRepository();
+  final ContactRepository _contactRepository = ContactRepository();
 
   late final GoogleMapController mapController;
   LatLng _coordinates = const LatLng(45.521563, -122.677433);
@@ -36,6 +38,11 @@ class _AddressViewState extends State<AddressView> {
 
   _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+
+    setMapPosition(
+      widget.contactModel.addressLine1,
+      widget.contactModel.addressLine2,
+    );
   }
 
   onSearch(String address) {
@@ -45,9 +52,13 @@ class _AddressViewState extends State<AddressView> {
         data.longitude,
       );
 
+      widget.contactModel.addressLine1 = data.longName;
+      widget.contactModel.addressLine2 = data.formattedAddress;
+      widget.contactModel.latLng = '${data.latitude}, ${data.longitude}';
+
       setMapPosition(
-        data.formattedAddress,
         data.longName,
+        data.formattedAddress,
       );
     }).catchError((onError) {
       print(onError);
@@ -122,6 +133,26 @@ class _AddressViewState extends State<AddressView> {
     }
   }
 
+  updateContact() {
+    _contactRepository.update(widget.contactModel).then((_) {
+      onSuccess();
+    }).catchError((onError) {
+      onError();
+    });
+  }
+
+  onSuccess() {
+    Navigator.pop(context);
+  }
+
+  onError() {
+    SnackBar snackBar = const SnackBar(
+      content: Text('Ops, algo deu errado'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,6 +161,14 @@ class _AddressViewState extends State<AddressView> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          TextButton(
+            onPressed: updateContact,
+            child: const Icon(
+              Icons.save,
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[
