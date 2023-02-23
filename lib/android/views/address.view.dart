@@ -147,13 +147,14 @@ class _AddressViewState extends State<AddressView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.contactModel.addressLine1!,
+                    widget.contactModel.addressLine1 ??
+                        'Nenhum endereço cadastrado',
                     style: const TextStyle(
                       fontSize: 12,
                     ),
                   ),
                   Text(
-                    widget.contactModel.addressLine2!,
+                    widget.contactModel.addressLine2 ?? '',
                     style: const TextStyle(
                       fontSize: 12,
                     ),
