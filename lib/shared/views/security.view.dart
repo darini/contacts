@@ -1,4 +1,4 @@
-import 'package:contacts/android/services/local-authentication.service.dart';
+import 'package:contacts/services/local-authentication.service.dart';
 import 'package:contacts/android/views/splash.view.dart';
 import 'package:contacts/controllers/auth.controller.dart';
 import 'package:flutter/material.dart';
