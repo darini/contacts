@@ -1,8 +1,9 @@
+import 'package:contacts/shared/styles.dart';
 import 'package:flutter/material.dart';
 
 const brightness = Brightness.light;
-const primaryColor = Color(0xFF2AACFF);
-const accentColor = Color(0xFFFFFFFF);
+const primaryColor = basePrimaryColor;
+const accentColor = baseAccentColor;
 
 ThemeData androidTheme() {
   return ThemeData(
@@ -43,5 +44,18 @@ ThemeData androidTheme() {
       ),
     ),
     primaryColor: primaryColor,
+    colorScheme: const ColorScheme(
+      brightness: brightness,
+      primary: primaryColor,
+      onPrimary: accentColor,
+      secondary: accentColor,
+      onSecondary: primaryColor,
+      error: accentColor,
+      onError: primaryColor,
+      background: primaryColor,
+      onBackground: accentColor,
+      surface: accentColor,
+      onSurface: primaryColor,
+    ),
   );
 }

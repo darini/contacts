@@ -1,7 +1,45 @@
+import 'package:contacts/services/ilocal-auth.service.dart';
+import 'package:contacts/controllers/auth.controller.dart';
 import 'package:flutter/material.dart';
 
-class SplashView extends StatelessWidget {
-  const SplashView({Key? key}) : super(key: key);
+class SplashView extends StatefulWidget {
+  final ILocalAuthService localAuthenticationService;
+  final AuthController authController;
+  const SplashView({
+    Key? key,
+    required this.localAuthenticationService,
+    required this.authController,
+  }) : super(key: key);
+
+  @override
+  State<SplashView> createState() => _SplashViewState();
+}
+
+class _SplashViewState extends State<SplashView> {
+  @override
+  initState() {
+    super.initState();
+
+    Future.delayed(
+      const Duration(
+        seconds: 2,
+      ),
+    ).then((_) {
+      widget.localAuthenticationService.stopAuthenticate().then(
+            (_) => auth(),
+          );
+    });
+  }
+
+  auth() {
+    widget.localAuthenticationService.authenticate().then((result) {
+      if (result) {
+        widget.authController.setAuthenticated();
+      } else {
+        widget.authController.setUnauthenticated();
+      }
+    }).catchError((onError) {});
+  }
 
   @override
   Widget build(BuildContext context) {
