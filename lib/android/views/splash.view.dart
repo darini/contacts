@@ -35,6 +35,8 @@ class _SplashViewState extends State<SplashView> {
     widget.localAuthenticationService.authenticate().then((result) {
       if (result) {
         widget.authController.setAuthenticated();
+      } else {
+        widget.authController.setUnauthenticated();
       }
     }).catchError((onError) {});
   }
